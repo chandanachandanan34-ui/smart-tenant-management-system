@@ -45,7 +45,7 @@
         <button class="mobile-menu" id="mobileMenu" aria-label="Toggle navigation">☰</button>
         <div class="breadcrumb">Workspace <span>/</span> <strong id="breadcrumbPage">Dashboard</strong></div>
         <div class="top-actions">
-          <div class="status-pill"><span class="live-dot"></span> Demo workspace</div>
+          <div class="status-pill"><span class="live-dot" id="liveDot"></span> <span id="workspaceStatusLabel">Connected to API</span></div>
           <button class="icon-button" id="notificationBtn" aria-label="Notifications" title="Notifications">♧<i></i></button>
           <div class="top-avatar">AD</div>
         </div>
@@ -152,17 +152,16 @@
           </div>
           <div class="empty-state hidden" id="tenantEmpty">No tenants match your search.</div>
         </section>
-        <p class="demo-note">Demo mode: records are stored in this browser only. Database integration comes later.</p>
+        <p class="demo-note" id="backendStatusNote">Connected to Spring Boot backend API (<code style="color:#8db7ff">http://localhost:8080/api/tenants</code>).</p>
       </section>
 
       <section class="page-section" id="page-properties">
-        <div class="page-heading"><div><p class="eyebrow">YOUR PORTFOLIO</p><h2>Properties</h2><p class="muted">A snapshot of the properties you manage.</p></div></div>
-        <div class="property-grid">
-          <article class="property-card"><div class="property-visual visual-one"><span>RESIDENTIAL</span><div class="building-art">▥</div></div><div class="property-info"><div class="property-title"><h3>Lakeview Residency</h3><span class="property-status">Active</span></div><p class="muted small">Indiranagar, Bengaluru</p><div class="property-metrics"><div><strong>12</strong><span>Units</span></div><div><strong id="lakeOccupied">0</strong><span>Occupied</span></div><div><strong>₹18k</strong><span>Avg. rent</span></div></div><div class="property-progress"><span style="width:67%"></span></div><small class="muted">Illustrative occupancy</small></div></article>
-          <article class="property-card"><div class="property-visual visual-two"><span>APARTMENTS</span><div class="building-art">▥</div></div><div class="property-info"><div class="property-title"><h3>Maple Heights</h3><span class="property-status">Active</span></div><p class="muted small">Whitefield, Bengaluru</p><div class="property-metrics"><div><strong>8</strong><span>Units</span></div><div><strong id="mapleOccupied">0</strong><span>Occupied</span></div><div><strong>₹22k</strong><span>Avg. rent</span></div></div><div class="property-progress"><span style="width:54%"></span></div><small class="muted">Illustrative occupancy</small></div></article>
-          <article class="property-card"><div class="property-visual visual-three"><span>RESIDENTIAL</span><div class="building-art">▥</div></div><div class="property-info"><div class="property-title"><h3>Greenwood Homes</h3><span class="property-status">Active</span></div><p class="muted small">Jayanagar, Bengaluru</p><div class="property-metrics"><div><strong>10</strong><span>Units</span></div><div><strong id="greenOccupied">0</strong><span>Occupied</span></div><div><strong>₹16k</strong><span>Avg. rent</span></div></div><div class="property-progress"><span style="width:73%"></span></div><small class="muted">Illustrative occupancy</small></div></article>
+        <div class="page-heading">
+          <div><p class="eyebrow">YOUR PORTFOLIO</p><h2>Properties</h2><p class="muted">Manage your properties, unit counts, and occupancy records.</p></div>
+          <button class="primary-button" id="addPropertyBtn"><span>＋</span> Add property</button>
         </div>
-        <p class="demo-note">Sample properties are included for the frontend demonstration. Property editing will be added after the tenant flow.</p>
+        <div class="property-grid" id="propertyGrid"></div>
+        <div class="empty-state hidden" id="propertyEmpty">No properties found. Click "Add property" above to add your first property.</div>
       </section>
 
       <section class="page-section" id="page-payments">
@@ -180,7 +179,7 @@
         </section>
       </section>
 
-      <footer class="footer"><span>© 2026 TenantHub · Smart Tenant Management</span><span><i class="live-dot"></i> Frontend demo</span></footer>
+      <footer class="footer"><span>© 2026 TenantHub · Smart Tenant Management</span><span><i class="live-dot" id="footerDot"></i> <span id="footerStatusLabel">Live Backend Connected</span></span></footer>
     </main>
   </div>
 
@@ -200,6 +199,41 @@
         </div>
         <div class="form-error hidden" id="formError"></div>
         <div class="modal-actions"><button type="button" class="secondary-button" id="cancelModal">Cancel</button><button type="submit" class="primary-button" id="saveTenant">Save tenant</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="propertyModal" role="dialog" aria-modal="true" aria-labelledby="propertyModalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">PROPERTY RECORD</p>
+          <h2 id="propertyModalTitle">Add new property</h2>
+          <p class="muted small">Enter property details and unit capacity.</p>
+        </div>
+        <button class="close-button" id="closePropertyModal" aria-label="Close">×</button>
+      </div>
+      <form id="propertyForm">
+        <input type="hidden" id="propertyId" />
+        <div class="form-grid">
+          <label class="field full">Property name <span>*</span><input id="propertyName" name="name" required maxlength="100" placeholder="e.g. Lakeview Residency" /></label>
+          <label class="field full">Address / Location <span>*</span><input id="propertyAddress" name="address" required maxlength="200" placeholder="e.g. Indiranagar, Bengaluru" /></label>
+          <label class="field">Property type <span>*</span>
+            <select id="propertyType" required>
+              <option value="Residential">Residential</option>
+              <option value="Apartments">Apartments</option>
+              <option value="Commercial">Commercial</option>
+              <option value="Villa">Villa</option>
+            </select>
+          </label>
+          <label class="field">Total units <span>*</span><input id="propertyTotalUnits" type="number" required min="1" max="10000" placeholder="12" /></label>
+          <label class="field full">Description <input id="propertyDescription" name="description" maxlength="500" placeholder="e.g. Modern apartments near metro" /></label>
+        </div>
+        <div class="form-error hidden" id="propertyFormError"></div>
+        <div class="modal-actions">
+          <button type="button" class="secondary-button" id="cancelPropertyModal">Cancel</button>
+          <button type="submit" class="primary-button" id="saveProperty">Save property</button>
+        </div>
       </form>
     </div>
   </div>
