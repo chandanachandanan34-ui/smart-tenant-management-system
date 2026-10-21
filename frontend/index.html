@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Smart Tenant Management System dashboard" />
+  <title>TenantHub | Smart Tenant Management</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">T</div>
+        <div>
+          <h1>Tenant<span>Hub</span></h1>
+          <p>PROPERTY MANAGEMENT</p>
+        </div>
+      </div>
+
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="nav-menu" aria-label="Main navigation">
+        <button class="nav-link active" data-page="dashboard"><span class="nav-icon">▦</span> Dashboard</button>
+        <button class="nav-link" data-page="tenants"><span class="nav-icon">♙</span> Tenants <span class="nav-count" id="navTenantCount">0</span></button>
+        <button class="nav-link" data-page="properties"><span class="nav-icon">⌂</span> Properties</button>
+        <button class="nav-link" data-page="payments"><span class="nav-icon">＄</span> Rent & Payments</button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-icon">?</div>
+          <strong>Need a hand?</strong>
+          <p>Your property workspace, all in one place.</p>
+        </div>
+        <div class="profile">
+          <div class="avatar">AD</div>
+          <div class="profile-copy"><strong>Admin User</strong><span>Property manager</span></div>
+          <span class="profile-menu">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="Toggle navigation">☰</button>
+        <div class="breadcrumb">Workspace <span>/</span> <strong id="breadcrumbPage">Dashboard</strong></div>
+        <div class="top-actions">
+          <div class="status-pill"><span class="live-dot"></span> Demo workspace</div>
+          <button class="icon-button" id="notificationBtn" aria-label="Notifications" title="Notifications">♧<i></i></button>
+          <div class="top-avatar">AD</div>
+        </div>
+      </header>
+
+      <section class="page-section active" id="page-dashboard">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">MONDAY, OCTOBER 19, 2026</p>
+            <h2>Good evening, Admin <span class="wave">✦</span></h2>
+            <p class="muted">Here's what's happening with your properties today.</p>
+          </div>
+          <button class="primary-button" id="addTenantTop"><span>＋</span> Add tenant</button>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-top"><span>Total tenants</span><span class="stat-icon blue">♙</span></div>
+            <div class="stat-value" id="statTenants">0</div>
+            <div class="stat-foot"><span class="trend positive">● Active</span><span> registered tenants</span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Properties</span><span class="stat-icon violet">⌂</span></div>
+            <div class="stat-value" id="statProperties">3</div>
+            <div class="stat-foot"><span class="trend neutral">● Portfolio</span><span> managed locations</span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Rent collected</span><span class="stat-icon green">↗</span></div>
+            <div class="stat-value" id="statCollected">₹0</div>
+            <div class="stat-foot"><span class="trend positive">● This month</span><span> paid rent</span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Pending rent</span><span class="stat-icon orange">◷</span></div>
+            <div class="stat-value" id="statPending">₹0</div>
+            <div class="stat-foot"><span class="trend warning">● Follow up</span><span> outstanding rent</span></div>
+          </article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel rent-panel">
+            <div class="panel-heading">
+              <div><h3>Rent collection</h3><p class="muted small">Monthly payment overview</p></div>
+              <span class="select-like">October 2026⌄</span>
+            </div>
+            <div class="collection-summary">
+              <div><span class="muted small">Collected so far</span><strong id="collectedLarge">₹0</strong></div>
+              <div class="collection-rate"><strong id="collectionRate">0%</strong><span class="muted small">of expected rent</span></div>
+            </div>
+            <div class="progress-track"><div class="progress-fill" id="collectionProgress"></div></div>
+            <div class="legend-row"><span><i class="legend-dot paid"></i> Paid</span><span><i class="legend-dot pending"></i> Pending</span><span><i class="legend-dot overdue"></i> Overdue</span></div>
+            <div class="mini-chart" aria-label="Illustrative rent collection trend">
+              <div class="chart-y-labels"><span>₹60k</span><span>₹40k</span><span>₹20k</span><span>₹0</span></div>
+              <div class="chart-bars">
+                <div class="bar-group"><div class="bar" style="height:42%"></div><span>May</span></div>
+                <div class="bar-group"><div class="bar" style="height:57%"></div><span>Jun</span></div>
+                <div class="bar-group"><div class="bar" style="height:51%"></div><span>Jul</span></div>
+                <div class="bar-group"><div class="bar" style="height:72%"></div><span>Aug</span></div>
+                <div class="bar-group"><div class="bar" style="height:65%"></div><span>Sep</span></div>
+                <div class="bar-group current"><div class="bar" style="height:84%"></div><span>Oct</span></div>
+              </div>
+            </div>
+            <p class="chart-note">Chart bars are illustrative demo values.</p>
+          </section>
+
+          <section class="panel activity-panel">
+            <div class="panel-heading"><div><h3>Quick actions</h3><p class="muted small">Common tasks at a glance</p></div></div>
+            <button class="action-row" id="quickAddTenant"><span class="action-icon blue">＋</span><span><strong>Add a tenant</strong><small>Register a new tenant</small></span><b>›</b></button>
+            <button class="action-row" data-goto="properties"><span class="action-icon violet">⌂</span><span><strong>View properties</strong><small>Check your property portfolio</small></span><b>›</b></button>
+            <button class="action-row" data-goto="payments"><span class="action-icon green">₹</span><span><strong>Track rent payments</strong><small>Review paid and pending rent</small></span><b>›</b></button>
+            <div class="tip-box"><span>✦</span><div><strong>Stay on top of rent</strong><p>Review pending payments regularly to keep your records up to date.</p></div></div>
+          </section>
+        </div>
+
+        <section class="panel table-panel">
+          <div class="panel-heading table-heading">
+            <div><h3>Recent tenants</h3><p class="muted small">Your latest tenant records</p></div>
+            <button class="text-button" data-goto="tenants">View all tenants <span>→</span></button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>TENANT</th><th>PROPERTY / UNIT</th><th>MONTHLY RENT</th><th>STATUS</th><th></th></tr></thead>
+              <tbody id="recentTenantRows"></tbody>
+            </table>
+          </div>
+          <div class="empty-state hidden" id="recentEmpty">No tenants yet. Add your first tenant to get started.</div>
+        </section>
+      </section>
+
+      <section class="page-section" id="page-tenants">
+        <div class="page-heading">
+          <div><p class="eyebrow">TENANT DIRECTORY</p><h2>Tenants</h2><p class="muted">Manage tenant details and occupancy records.</p></div>
+          <button class="primary-button" id="addTenantPage"><span>＋</span> Add tenant</button>
+        </div>
+        <section class="panel table-panel">
+          <div class="panel-heading tenant-tools">
+            <div><h3>All tenants <span class="count-badge" id="tenantCountLabel">0</span></h3><p class="muted small">Search and manage your registered tenants.</p></div>
+            <div class="table-controls">
+              <label class="search-box"><span>⌕</span><input id="tenantSearch" type="search" placeholder="Search tenants..." /></label>
+              <select id="statusFilter" aria-label="Filter tenants by payment status"><option value="all">All statuses</option><option value="Paid">Paid</option><option value="Pending">Pending</option><option value="Overdue">Overdue</option></select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table><thead><tr><th>TENANT</th><th>PROPERTY / UNIT</th><th>PHONE</th><th>MONTHLY RENT</th><th>STATUS</th><th>ACTIONS</th></tr></thead><tbody id="tenantRows"></tbody></table>
+          </div>
+          <div class="empty-state hidden" id="tenantEmpty">No tenants match your search.</div>
+        </section>
+        <p class="demo-note">Demo mode: records are stored in this browser only. Database integration comes later.</p>
+      </section>
+
+      <section class="page-section" id="page-properties">
+        <div class="page-heading"><div><p class="eyebrow">YOUR PORTFOLIO</p><h2>Properties</h2><p class="muted">A snapshot of the properties you manage.</p></div></div>
+        <div class="property-grid">
+          <article class="property-card"><div class="property-visual visual-one"><span>RESIDENTIAL</span><div class="building-art">▥</div></div><div class="property-info"><div class="property-title"><h3>Lakeview Residency</h3><span class="property-status">Active</span></div><p class="muted small">Indiranagar, Bengaluru</p><div class="property-metrics"><div><strong>12</strong><span>Units</span></div><div><strong id="lakeOccupied">0</strong><span>Occupied</span></div><div><strong>₹18k</strong><span>Avg. rent</span></div></div><div class="property-progress"><span style="width:67%"></span></div><small class="muted">Illustrative occupancy</small></div></article>
+          <article class="property-card"><div class="property-visual visual-two"><span>APARTMENTS</span><div class="building-art">▥</div></div><div class="property-info"><div class="property-title"><h3>Maple Heights</h3><span class="property-status">Active</span></div><p class="muted small">Whitefield, Bengaluru</p><div class="property-metrics"><div><strong>8</strong><span>Units</span></div><div><strong id="mapleOccupied">0</strong><span>Occupied</span></div><div><strong>₹22k</strong><span>Avg. rent</span></div></div><div class="property-progress"><span style="width:54%"></span></div><small class="muted">Illustrative occupancy</small></div></article>
+          <article class="property-card"><div class="property-visual visual-three"><span>RESIDENTIAL</span><div class="building-art">▥</div></div><div class="property-info"><div class="property-title"><h3>Greenwood Homes</h3><span class="property-status">Active</span></div><p class="muted small">Jayanagar, Bengaluru</p><div class="property-metrics"><div><strong>10</strong><span>Units</span></div><div><strong id="greenOccupied">0</strong><span>Occupied</span></div><div><strong>₹16k</strong><span>Avg. rent</span></div></div><div class="property-progress"><span style="width:73%"></span></div><small class="muted">Illustrative occupancy</small></div></article>
+        </div>
+        <p class="demo-note">Sample properties are included for the frontend demonstration. Property editing will be added after the tenant flow.</p>
+      </section>
+
+      <section class="page-section" id="page-payments">
+        <div class="page-heading"><div><p class="eyebrow">FINANCIAL OVERVIEW</p><h2>Rent & Payments</h2><p class="muted">Monitor rent status across your tenant records.</p></div></div>
+        <div class="stats-grid payment-stats">
+          <article class="stat-card"><div class="stat-top"><span>Expected rent</span><span class="stat-icon blue">₹</span></div><div class="stat-value" id="paymentExpected">₹0</div><div class="stat-foot muted">Total monthly rent</div></article>
+          <article class="stat-card"><div class="stat-top"><span>Paid</span><span class="stat-icon green">✓</span></div><div class="stat-value" id="paymentPaid">₹0</div><div class="stat-foot muted">Marked as paid</div></article>
+          <article class="stat-card"><div class="stat-top"><span>Pending</span><span class="stat-icon orange">◷</span></div><div class="stat-value" id="paymentPending">₹0</div><div class="stat-foot muted">Awaiting payment</div></article>
+          <article class="stat-card"><div class="stat-top"><span>Overdue</span><span class="stat-icon red">!</span></div><div class="stat-value" id="paymentOverdue">₹0</div><div class="stat-foot muted">Needs follow-up</div></article>
+        </div>
+        <section class="panel table-panel">
+          <div class="panel-heading"><div><h3>Payment register</h3><p class="muted small">Update the status when a payment is received.</p></div></div>
+          <div class="table-wrap"><table><thead><tr><th>TENANT</th><th>PROPERTY / UNIT</th><th>RENT DUE</th><th>AMOUNT</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="paymentRows"></tbody></table></div>
+          <div class="empty-state hidden" id="paymentEmpty">Add tenants to begin tracking rent.</div>
+        </section>
+      </section>
+
+      <footer class="footer"><span>© 2026 TenantHub · Smart Tenant Management</span><span><i class="live-dot"></i> Frontend demo</span></footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="tenantModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header"><div><p class="eyebrow">TENANT RECORD</p><h2 id="modalTitle">Add new tenant</h2><p class="muted small">Enter the tenant's basic information below.</p></div><button class="close-button" id="closeModal" aria-label="Close">×</button></div>
+      <form id="tenantForm">
+        <input type="hidden" id="tenantId" />
+        <div class="form-grid">
+          <label class="field full">Full name <span>*</span><input id="tenantName" name="name" required maxlength="80" placeholder="e.g. Ananya Sharma" /></label>
+          <label class="field">Email address <input id="tenantEmail" name="email" type="email" placeholder="name@example.com" /></label>
+          <label class="field">Phone number <span>*</span><input id="tenantPhone" name="phone" required maxlength="20" placeholder="e.g. 9876543210" /></label>
+          <label class="field">Property <span>*</span><select id="tenantProperty" required><option value="">Choose property</option><option>Lakeview Residency</option><option>Maple Heights</option><option>Greenwood Homes</option></select></label>
+          <label class="field">Unit / room <span>*</span><input id="tenantUnit" required maxlength="20" placeholder="e.g. A-204" /></label>
+          <label class="field">Monthly rent (₹) <span>*</span><input id="tenantRent" type="number" required min="1" max="10000000" placeholder="18000" /></label>
+          <label class="field">Payment status <span>*</span><select id="tenantStatus" required><option>Pending</option><option>Paid</option><option>Overdue</option></select></label>
+        </div>
+        <div class="form-error hidden" id="formError"></div>
+        <div class="modal-actions"><button type="button" class="secondary-button" id="cancelModal">Cancel</button><button type="submit" class="primary-button" id="saveTenant">Save tenant</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast hidden" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>

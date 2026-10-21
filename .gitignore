@@ -1,0 +1,20 @@
+# Java build files
+backend/target/
+*.class
+
+# Secrets
+.env
+.env.*
+!.env.example
+application-secrets.properties
+
+# IDE files
+.vscode/
+.idea/
+
+# Operating system
+Thumbs.db
+.DS_Store
+
+# Keep local database credentials private
+backend/src/main/resources/application.properties
